@@ -1,14 +1,12 @@
 /** @type {import('next').NextConfig} */
 const { string, object } = require("yup");
-const { generateSampleEnv, validateEnv } = require("./env.utils.js");
+const { validateEnv } = require("./env.utils.js");
 
 const envConfig = {
   envType: process.env.NEXT_PUBLIC_ENV_TYPE,
   supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
   supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_KEY,
 };
-
-module.exports = envConfig;
 
 const envConfigSchema = object({
   NEXT_PUBLIC_ENV_TYPE: string()
