@@ -7,3 +7,128 @@
     text-wrap: balance;
   }
 }
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/font/PoppinsBlack.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/font/PoppinsExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/font/PoppinsBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/font/PoppinsSemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/font/PoppinsMedium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/font/PoppinsRegular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/font/PoppinsLight.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/font/PoppinsExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("/font/PoppinsThin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+/* hide spin button on number input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* ------- Scrollbar ------- */
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b3bacb;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #9ba4ba;
+}
+
+* {
+  font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
+}
+
+h1 {
+  @apply text-3xl font-semibold text-black-400 sm:text-4xl;
+}
+
+h2 {
+  @apply text-3xl font-semibold text-black-400;
+}
+
+h3 {
+  @apply text-2xl font-medium text-black-400;
+}
+
+h4 {
+  @apply text-xl font-normal text-black-400;
+}
+
+h5 {
+  @apply text-lg font-normal text-black-400;
+}
+
+h6 {
+  @apply text-base font-normal text-black-400;
+}
+
+p {
+  @apply text-sm font-normal text-black-400 sm:text-base;
+}
