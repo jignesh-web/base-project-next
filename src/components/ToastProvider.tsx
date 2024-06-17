@@ -1,6 +1,6 @@
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { color } from "@/constants/color";
 import { setToast } from "@/redux/slices/toastSlice";
 
@@ -58,14 +58,14 @@ const notify = (type: string, message: string) => {
 
 export const ToastProvider = () => {
   const dispatch = useDispatch();
-  const messageData = useSelector((state: any) => state.message);
+  const toast = useSelector((state: any) => state.toast);
 
   useEffect(() => {
-    if (messageData) {
+    if (toast) {
       dispatch(setToast(null));
-      notify(messageData?.type, messageData?.message);
+      notify(toast?.type, toast?.message);
     }
-  }, [messageData]);
+  }, [toast]);
 
   return <Toaster position="top-center" reverseOrder={false} gutter={8} />;
 };

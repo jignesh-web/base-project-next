@@ -12,9 +12,11 @@ import {
   REGISTER,
   PersistConfig,
 } from "redux-persist";
+import toastSlice from "./slices/toastSlice";
 
 const rootReducer = combineReducers({
   user: userSlice,
+  toast: toastSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

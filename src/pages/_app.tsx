@@ -10,13 +10,12 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ToastProvider>
-          <AuthHandler>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </AuthHandler>
-        </ToastProvider>
+        <ToastProvider />
+        <AuthHandler>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </AuthHandler>
       </PersistGate>
     </Provider>
   );
