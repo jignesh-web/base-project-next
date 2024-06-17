@@ -1,6 +1,7 @@
-export type Response<T = unknown, E = any> = {
+import { CustomError } from "@/utils/common.utils";
+
+export type Response<T = unknown> = {
   status: number;
   data: T | null;
-  msg: "SUCCESS" | "FAILED";
-  error?: E;
+  error?: CustomError | null;
 };

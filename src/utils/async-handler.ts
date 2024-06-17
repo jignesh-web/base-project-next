@@ -7,13 +7,13 @@ export const handleAsync =
   ): Promise<Response<Awaited<ReturnType<T>>["data"]>> => {
     try {
       return await asyncFn(...args);
-    } catch (error) {
-      console.error("Error:", error);
-      return {
-        status: 500, // Error status code
-        data: null,
-        msg: "FAILED",
-        error: (error as any).message || "Unknown error",
-      };
+    } catch (err) {
+      console.error("Error:", err);
+
+      const status = (err as { status?: number })?.status || 500;
+      const error =
+        err instanceof Error ? err : new Error(`Unknown error: ${String(err)}`);
+
+      return { error, status, data: null };
     }
   };
