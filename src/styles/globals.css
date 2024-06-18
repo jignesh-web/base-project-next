@@ -107,30 +107,77 @@ input[type="number"]::-webkit-outer-spin-button {
   scroll-behavior: smooth;
 }
 
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #09090b;
+    --card: #ffffff;
+    --card-foreground: #09090b;
+    --popover: #ffffff;
+    --popover-foreground: #09090b;
+    --primary: #16a34a;
+    --primary-foreground: #fff1f2;
+    --secondary: #f4f4f5;
+    --secondary-foreground: #18181b;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --accent: #f4f4f5;
+    --accent-foreground: #18181b;
+    --destructive: #ef4444;
+    --destructive-foreground: #fafafa;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --ring: #16a34a;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: #0c0a09;
+    --foreground: #f2f2f2;
+    --card: #1c1917;
+    --card-foreground: #f2f2f2;
+    --popover: #171717;
+    --popover-foreground: #f2f2f2;
+    --primary: #22c55e;
+    --primary-foreground: #052e16;
+    --secondary: #27272a;
+    --secondary-foreground: #fafafa;
+    --muted: #262626;
+    --muted-foreground: #a1a1aa;
+    --accent: #292524;
+    --accent-foreground: #fafafa;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #fef2f2;
+    --border: #27272a;
+    --input: #27272a;
+    --ring: #15803d;
+  }
+}
+
 h1 {
-  @apply text-3xl font-semibold text-black-400 sm:text-4xl;
+  @apply text-3xl font-semibold text-secondary-foreground sm:text-4xl;
 }
 
 h2 {
-  @apply text-3xl font-semibold text-black-400;
+  @apply text-3xl font-semibold text-secondary-foreground;
 }
 
 h3 {
-  @apply text-2xl font-medium text-black-400;
+  @apply text-2xl font-medium text-secondary-foreground;
 }
 
 h4 {
-  @apply text-xl font-normal text-black-400;
+  @apply text-xl font-normal text-secondary-foreground;
 }
 
 h5 {
-  @apply text-lg font-normal text-black-400;
+  @apply text-lg font-normal text-secondary-foreground;
 }
 
 h6 {
-  @apply text-base font-normal text-black-400;
+  @apply text-base font-normal text-secondary-foreground;
 }
 
 p {
-  @apply text-sm font-normal text-black-400 sm:text-base;
+  @apply text-sm font-normal text-secondary-foreground sm:text-base;
 }

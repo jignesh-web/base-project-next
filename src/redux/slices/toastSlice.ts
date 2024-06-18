@@ -1,4 +1,4 @@
-import { ToastType } from "@/components/ToastProvider";
+import { ToastType } from "@/components/shared";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const toastSlice = createSlice({
