@@ -1,6 +1,6 @@
 import { Response } from "@/service/index.types";
 import { CustomError } from "./common.utils";
-import { ToastType } from "@/components/shared/ToastProvider";
+import { ToastType } from "@/components/shared";
 import { getErrorMessage } from "./error-messages";
 
 export type HandleAsyncArgs<T> = {

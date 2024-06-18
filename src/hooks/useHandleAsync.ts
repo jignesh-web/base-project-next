@@ -1,4 +1,4 @@
-import { ToastType } from "@/components/shared/ToastProvider";
+import { ToastType } from "@/components/shared";
 import { setToast } from "@/redux/slices/toastSlice";
 import { Response } from "@/service/index.types";
 import { HandleAsyncArgs, handleAsync } from "@/utils/async-handler";
@@ -15,7 +15,7 @@ export const useHandleAsync = <T extends (...args: any[]) => Promise<any>>(
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleToast = (toastData?: ToastType) => {
+  const handleToast = (toastData: ToastType) => {
     dispatch(setToast(toastData));
   };
 
