@@ -14,7 +14,7 @@ import { useHandleAsync } from "@/hooks/useHandleAsync";
 
 const SignUp = () => {
   const router = useRouter();
-  const [handleSignUpWithEmail, isLoading] = useHandleAsync(signUpWithEmail);
+  const [signUpWithEmailWrapper, isLoading] = useHandleAsync(signUpWithEmail);
 
   const methods = useForm({
     defaultValues: {
@@ -27,7 +27,7 @@ const SignUp = () => {
 
   const { handleSubmit, setError } = methods || {};
 
-  const handleSignUp = async ({
+  const handleSignUpWithEmail = async ({
     name,
     email,
     password,
@@ -45,7 +45,7 @@ const SignUp = () => {
       return;
     }
 
-    const res = await handleSignUpWithEmail({
+    const res = await signUpWithEmailWrapper({
       email,
       password,
       otherInfo: { name },
@@ -89,7 +89,7 @@ const SignUp = () => {
             />
             <PrimaryButton
               loading={isLoading}
-              onClick={handleSubmit(handleSignUp)}
+              onClick={handleSubmit(handleSignUpWithEmail)}
             >
               Sign Up
             </PrimaryButton>

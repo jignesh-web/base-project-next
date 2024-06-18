@@ -16,7 +16,14 @@ import { useHandleAsync } from "@/hooks";
 const SignIn = () => {
   const router = useRouter();
 
-  const [handleSignInWithEmail, isLoading] = useHandleAsync(signInWithEmail);
+  const [handleSignInWithEmail, isLoading] = useHandleAsync(signInWithEmail, {
+    successMessage: "Successfully Signed In",
+    onSuccess: (data) => {
+      if (data?.status === 200) {
+        router.replace("/");
+      }
+    },
+  });
 
   const methods = useForm({
     defaultValues: {
@@ -25,15 +32,7 @@ const SignIn = () => {
     },
   });
 
-  const { handleSubmit, watch } = methods || {};
-
-  const handleSignIn = async ({ email, password }: Record<string, string>) => {
-    const res = await handleSignInWithEmail({ email, password });
-
-    if (res?.status === 200) {
-      router.replace("/");
-    }
-  };
+  const { handleSubmit } = methods || {};
 
   return (
     <FormProvider {...methods}>
@@ -58,7 +57,9 @@ const SignIn = () => {
             />
             <PrimaryButton
               loading={isLoading}
-              onClick={handleSubmit(handleSignIn)}
+              onClick={handleSubmit(({ email, password }) => {
+                handleSignInWithEmail({ email, password });
+              })}
             >
               Sign In
             </PrimaryButton>

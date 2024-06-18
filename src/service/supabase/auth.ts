@@ -1,18 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
-import { handleAsync } from "@/utils";
 import { Response } from "../index.types";
-import { CustomError } from "@/utils/common.utils";
-
-export const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_KEY!,
-  {
-    auth: {
-      detectSessionInUrl: true, // detect session in url (for Oauth redirects)
-      // storage: , //custom configuration for storage
-    },
-  }
-);
+import { supabase } from "./client";
 
 type EmailAuthArgs = {
   email: string;
@@ -21,14 +8,14 @@ type EmailAuthArgs = {
 };
 
 const formatResponse = <T>(
-  res: Partial<Response<T>>,
+  { data, error }: Partial<Response<T>>,
   successMessage?: string
 ) => {
   return {
-    data: res?.data,
-    error: res?.error,
-    status: res?.error?.status || 200,
-    message: res?.error?.message || successMessage,
+    data: data,
+    error: error,
+    status: error?.status || 200,
+    message: error?.message || successMessage,
   };
 };
 
@@ -52,17 +39,11 @@ export const signInWithEmail = async ({
   email,
   password,
 }: Omit<EmailAuthArgs, "otherInfo">) => {
-  const res = await supabase.auth.signInWithPassword({
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
-
-  return {
-    data: res?.data,
-    error: res?.error,
-    status: res?.error?.status || 200,
-    message: res?.error?.message,
-  };
+  return formatResponse({ data, error });
 };
 
 export const signInWithOtp = async ({
@@ -80,18 +61,13 @@ export const signInWithOtp = async ({
 };
 
 export const signInWithGoogle = async () => {
-  const res = await supabase.auth.signInWithOAuth({
+  const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
       redirectTo: window?.location?.href,
     },
   });
-  return {
-    data: res?.data,
-    error: res?.error,
-    status: res?.error?.status || 200,
-    message: res?.error?.message,
-  };
+  return formatResponse({ data, error });
 };
 
 export const signOut = async () => {
