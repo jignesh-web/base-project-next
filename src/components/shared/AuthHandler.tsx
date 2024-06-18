@@ -1,4 +1,4 @@
-import { setUserDetails } from "@/redux/slices/userSlice";
+import { setUserDetails } from "@/redux";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";

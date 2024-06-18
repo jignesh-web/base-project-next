@@ -1,1 +1,1 @@
-export { setUserData, updateUser } from "./slices/userSlice";
+export { setUserDetails, updateUserDetails } from "./slices/userSlice";

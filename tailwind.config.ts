@@ -9,8 +9,6 @@ module.exports = {
   theme: {
     colors: {
       // Using modern `hsl`
-      primary: "hsl(var(--color-primary) / 1)",
-      secondary: "hsl(var(--color-secondary) / 1)",
       border: "var(--border)",
       input: "var(--input)",
       ring: "var(--ring)",
