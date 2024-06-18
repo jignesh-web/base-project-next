@@ -1,27 +1,21 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import { RootState } from "@/redux/store";
 import { PrimaryButton } from "@/components/primary";
 import { signOut } from "@/service/supabase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { setToast } from "@/redux/slices/toastSlice";
+import { useHandleAsync } from "@/hooks";
 
 export default function Home() {
   const user = useSelector((state: RootState) => state?.user);
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+  const [handleSignOut, isLoading] = useHandleAsync(signOut);
   const router = useRouter();
 
-  const handleSignOut = async () => {
-    setIsLoading(true);
-    const res = await signOut();
-
+  const handleSignOutUser = async () => {
+    const res = await handleSignOut();
     if (res?.error === null) {
       router.replace("/signin");
-    } else {
-      setIsLoading(false);
     }
 
     const type = res?.error ? "ERROR" : "SUCCESS";
@@ -37,7 +31,7 @@ export default function Home() {
       <PrimaryButton
         className=" w-24"
         loading={isLoading}
-        onClick={handleSignOut}
+        onClick={handleSignOutUser}
       >
         Sign Out
       </PrimaryButton>

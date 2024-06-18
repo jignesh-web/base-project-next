@@ -2,25 +2,21 @@ import React from "react";
 import { PrimaryInput, PrimaryButton } from "@/components/primary";
 
 import Link from "next/link";
-import { ContinueWithGoogle } from "@/components";
+import { ContinueWithGoogle } from "@/components/shared";
 import { FormProvider, useForm } from "react-hook-form";
-import { signInWithEmail, signInWithGoogle } from "@/service/supabase/auth";
+import { signInWithEmail } from "@/service/supabase/auth";
 import {
   emailValidation,
   passwordValidation,
 } from "@/validations/field-validations";
 import { useRouter } from "next/router";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "@/components/base";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/base";
+import { useHandleAsync } from "@/hooks";
 
 const SignIn = () => {
   const router = useRouter();
+
+  const [handleSignInWithEmail, isLoading] = useHandleAsync(signInWithEmail);
 
   const methods = useForm({
     defaultValues: {
@@ -29,14 +25,11 @@ const SignIn = () => {
     },
   });
 
-  const {
-    handleSubmit,
-    watch,
-    formState: { isSubmitting },
-  } = methods || {};
+  const { handleSubmit, watch } = methods || {};
 
   const handleSignIn = async ({ email, password }: Record<string, string>) => {
-    const res = await signInWithEmail({ email, password });
+    const res = await handleSignInWithEmail({ email, password });
+
     if (res?.status === 200) {
       router.replace("/");
     }
@@ -64,7 +57,7 @@ const SignIn = () => {
               autoComplete="current-password"
             />
             <PrimaryButton
-              loading={isSubmitting}
+              loading={isLoading}
               onClick={handleSubmit(handleSignIn)}
             >
               Sign In
@@ -76,7 +69,7 @@ const SignIn = () => {
               </Link>
             </p>
             <p className="text-center text-sm"> Or</p>
-            <ContinueWithGoogle onClick={signInWithGoogle} />
+            <ContinueWithGoogle />
           </CardContent>
         </Card>
       </div>

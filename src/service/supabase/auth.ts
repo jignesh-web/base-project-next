@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { handleAsync } from "@/utils";
+import { Response } from "../index.types";
 import { CustomError } from "@/utils/common.utils";
 
 export const supabase = createClient(
@@ -19,63 +20,81 @@ type EmailAuthArgs = {
   otherInfo?: object;
 };
 
-const formatResponse = (res: any, successMessage?: string) => {
+const formatResponse = <T>(
+  res: Partial<Response<T>>,
+  successMessage?: string
+) => {
   return {
     data: res?.data,
     error: res?.error,
-    status: res?.status || 200,
+    status: res?.error?.status || 200,
     message: res?.error?.message || successMessage,
   };
 };
 
-export const signUpWithEmail = handleAsync(
-  async ({ email, password, otherInfo }: EmailAuthArgs) => {
-    const res = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: window?.location?.href,
-        data: otherInfo,
-      },
-    });
-    return formatResponse(res);
-  }
-);
+export const signUpWithEmail = async ({
+  email,
+  password,
+  otherInfo,
+}: EmailAuthArgs) => {
+  const res = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: window?.location?.href,
+      data: otherInfo,
+    },
+  });
+  return formatResponse(res);
+};
 
-export const signInWithEmail = handleAsync(
-  async ({ email, password }: Omit<EmailAuthArgs, "otherInfo">) => {
-    const res = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return formatResponse(res);
-  }
-);
+export const signInWithEmail = async ({
+  email,
+  password,
+}: Omit<EmailAuthArgs, "otherInfo">) => {
+  const res = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
-export const signInWithOtp = handleAsync(
-  async ({ email, otherInfo }: Omit<EmailAuthArgs, "password">) => {
-    const res = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: window?.location?.href,
-        data: otherInfo,
-      },
-    });
-    return formatResponse(res);
-  }
-);
+  return {
+    data: res?.data,
+    error: res?.error,
+    status: res?.error?.status || 200,
+    message: res?.error?.message,
+  };
+};
 
-export const signInWithGoogle = handleAsync(async () => {
+export const signInWithOtp = async ({
+  email,
+  otherInfo,
+}: Omit<EmailAuthArgs, "password">) => {
+  const res = await supabase.auth.signInWithOtp({
+    email,
+    options: {
+      emailRedirectTo: window?.location?.href,
+      data: otherInfo,
+    },
+  });
+  return formatResponse(res);
+};
+
+export const signInWithGoogle = async () => {
   const res = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
       redirectTo: window?.location?.href,
     },
   });
-  return formatResponse(res);
-});
+  return {
+    data: res?.data,
+    error: res?.error,
+    status: res?.error?.status || 200,
+    message: res?.error?.message,
+  };
+};
 
-export const signOut = handleAsync(async () => {
+export const signOut = async () => {
   const res = await supabase.auth.signOut();
   return formatResponse(res);
-});
+};

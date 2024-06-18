@@ -10,9 +10,12 @@ import {
 } from "@/validations/field-validations";
 import { useRouter } from "next/router";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/base";
+import { useHandleAsync } from "@/hooks/useHandleAsync";
 
 const SignUp = () => {
   const router = useRouter();
+  const [handleSignUpWithEmail, isLoading] = useHandleAsync(signUpWithEmail);
+
   const methods = useForm({
     defaultValues: {
       name: "",
@@ -22,10 +25,7 @@ const SignUp = () => {
     },
   });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods || {};
+  const { handleSubmit, setError } = methods || {};
 
   const handleSignUp = async ({
     name,
@@ -33,7 +33,23 @@ const SignUp = () => {
     password,
     confirmPassword,
   }: Record<string, string>) => {
-    const res = await signUpWithEmail({ email, password, otherInfo: { name } });
+    if (password !== confirmPassword) {
+      setError(
+        "confirmPassword",
+        {
+          type: "validate",
+          message: "Passwords do not match",
+        },
+        { shouldFocus: true }
+      );
+      return;
+    }
+
+    const res = await handleSignUpWithEmail({
+      email,
+      password,
+      otherInfo: { name },
+    });
     if (res?.status === 200) {
       router.replace("/");
     }
@@ -53,7 +69,6 @@ const SignUp = () => {
               title="Name"
               registerOptions={{ required: "Name is required" }}
             />
-            {/* <PrimaryInput title="Username" /> */}
             <PrimaryInput
               type="text"
               name="email"
@@ -67,13 +82,13 @@ const SignUp = () => {
               registerOptions={passwordValidation}
             />
             <PrimaryInput
-              type="text"
+              type="password"
               name="confirmPassword"
               title="Confirm Password"
               registerOptions={passwordValidation}
             />
             <PrimaryButton
-              loading={isSubmitting}
+              loading={isLoading}
               onClick={handleSubmit(handleSignUp)}
             >
               Sign Up
