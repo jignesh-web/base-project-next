@@ -10,6 +10,14 @@ import {
   passwordValidation,
 } from "@/validations/field-validations";
 import { useRouter } from "next/router";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/base";
 
 const SignIn = () => {
   const router = useRouter();
@@ -37,36 +45,40 @@ const SignIn = () => {
   return (
     <FormProvider {...methods}>
       <div className="h-full flex flex-col gap-4 justify-center items-center">
-        <div className="flex flex-col gap-2 w-[345px] space-y-2 px-4 py-8 ">
-          <h3>Sign In</h3>
-          <PrimaryInput
-            registerOptions={emailValidation}
-            title="Email"
-            type="text"
-            name="email"
-          />
-          <PrimaryInput
-            registerOptions={passwordValidation}
-            title="Password"
-            type="text"
-            name="password"
-            autoComplete="current-password"
-          />
-          <PrimaryButton
-            loading={isSubmitting}
-            onClick={handleSubmit(handleSignIn)}
-          >
-            Sign In
-          </PrimaryButton>
-          <p className="text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link href="/signup" className="underline">
-              Sign up
-            </Link>
-          </p>
-          <p className="text-center text-sm"> Or</p>
-          <ContinueWithGoogle onClick={signInWithGoogle} />
-        </div>
+        <Card className=" w-[345px]">
+          <CardHeader>
+            <CardTitle>Sign In</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-2 w-[350px] space-y-2">
+            <PrimaryInput
+              registerOptions={emailValidation}
+              title="Email"
+              type="text"
+              name="email"
+            />
+            <PrimaryInput
+              registerOptions={passwordValidation}
+              title="Password"
+              type="text"
+              name="password"
+              autoComplete="current-password"
+            />
+            <PrimaryButton
+              loading={isSubmitting}
+              onClick={handleSubmit(handleSignIn)}
+            >
+              Sign In
+            </PrimaryButton>
+            <p className="text-center text-sm">
+              Don&apos;t have an account?{" "}
+              <Link href="/signup" className="underline">
+                Sign up
+              </Link>
+            </p>
+            <p className="text-center text-sm"> Or</p>
+            <ContinueWithGoogle onClick={signInWithGoogle} />
+          </CardContent>
+        </Card>
       </div>
     </FormProvider>
   );

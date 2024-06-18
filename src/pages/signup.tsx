@@ -9,6 +9,7 @@ import {
   passwordValidation,
 } from "@/validations/field-validations";
 import { useRouter } from "next/router";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/base";
 
 const SignUp = () => {
   const router = useRouter();
@@ -41,46 +42,50 @@ const SignUp = () => {
   return (
     <FormProvider {...methods}>
       <div className="h-full flex flex-col gap-4 justify-center items-center">
-        <div className="flex flex-col gap-2 w-[345px] space-y-1.5 px-4 py-8 ">
-          <h3>Create an account</h3>
-          <PrimaryInput
-            type="text"
-            name="name"
-            title="Name"
-            registerOptions={{ required: "Name is required" }}
-          />
-          {/* <PrimaryInput title="Username" /> */}
-          <PrimaryInput
-            type="text"
-            name="email"
-            title="Email"
-            registerOptions={emailValidation}
-          />
-          <PrimaryInput
-            type="text"
-            name="password"
-            title="Password"
-            registerOptions={passwordValidation}
-          />
-          <PrimaryInput
-            type="text"
-            name="confirmPassword"
-            title="Confirm Password"
-            registerOptions={passwordValidation}
-          />
-          <PrimaryButton
-            loading={isSubmitting}
-            onClick={handleSubmit(handleSignUp)}
-          >
-            Sign Up
-          </PrimaryButton>
-          <p className="text-center text-sm">
-            Already have an account?{" "}
-            <Link href="/signin" className="underline">
-              Sign In
-            </Link>
-          </p>
-        </div>
+        <Card className=" w-[350px]">
+          <CardHeader>
+            <CardTitle>Create an account</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-2 w-[345px] space-y-2">
+            <PrimaryInput
+              type="text"
+              name="name"
+              title="Name"
+              registerOptions={{ required: "Name is required" }}
+            />
+            {/* <PrimaryInput title="Username" /> */}
+            <PrimaryInput
+              type="text"
+              name="email"
+              title="Email"
+              registerOptions={emailValidation}
+            />
+            <PrimaryInput
+              type="text"
+              name="password"
+              title="Password"
+              registerOptions={passwordValidation}
+            />
+            <PrimaryInput
+              type="text"
+              name="confirmPassword"
+              title="Confirm Password"
+              registerOptions={passwordValidation}
+            />
+            <PrimaryButton
+              loading={isSubmitting}
+              onClick={handleSubmit(handleSignUp)}
+            >
+              Sign Up
+            </PrimaryButton>
+            <p className="text-center text-sm">
+              Already have an account?{" "}
+              <Link href="/signin" className="underline">
+                Sign In
+              </Link>
+            </p>
+          </CardContent>
+        </Card>
       </div>
     </FormProvider>
   );
