@@ -4,6 +4,7 @@ import { supabase } from "./client";
 type EmailAuthArgs = {
   email: string;
   password: string;
+  otp: string;
   otherInfo?: object;
 };
 
@@ -23,7 +24,7 @@ export const signUpWithEmail = async ({
   email,
   password,
   otherInfo,
-}: EmailAuthArgs) => {
+}: Omit<EmailAuthArgs, "otp">) => {
   const res = await supabase.auth.signUp({
     email,
     password,
@@ -38,7 +39,7 @@ export const signUpWithEmail = async ({
 export const signInWithEmail = async ({
   email,
   password,
-}: Omit<EmailAuthArgs, "otherInfo">) => {
+}: Omit<EmailAuthArgs, "otp" | "otherInfo">) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -49,13 +50,25 @@ export const signInWithEmail = async ({
 export const signInWithOtp = async ({
   email,
   otherInfo,
-}: Omit<EmailAuthArgs, "password">) => {
+}: Omit<EmailAuthArgs, "password" | "otp">) => {
   const res = await supabase.auth.signInWithOtp({
     email,
     options: {
       emailRedirectTo: window?.location?.href,
       data: otherInfo,
     },
+  });
+  return formatResponse(res);
+};
+
+export const verifyOtp = async ({
+  email,
+  otp,
+}: Omit<EmailAuthArgs, "password" | "otherInfo">) => {
+  const res = await supabase.auth.verifyOtp({
+    type: "signup",
+    email: email,
+    token: otp,
   });
   return formatResponse(res);
 };

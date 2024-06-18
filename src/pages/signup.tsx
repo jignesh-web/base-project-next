@@ -13,8 +13,9 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/base";
 import { useHandleAsync } from "@/hooks/useHandleAsync";
 
 const SignUp = () => {
-  const router = useRouter();
-  const [signUpWithEmailWrapper, isLoading] = useHandleAsync(signUpWithEmail);
+  const [signUpWithEmailWrapper, isLoading] = useHandleAsync(signUpWithEmail, {
+    successMessage: "Verification email sent. Please check your inbox.",
+  });
 
   const methods = useForm({
     defaultValues: {
@@ -45,14 +46,11 @@ const SignUp = () => {
       return;
     }
 
-    const res = await signUpWithEmailWrapper({
+    await signUpWithEmailWrapper({
       email,
       password,
       otherInfo: { name },
     });
-    if (res?.status === 200) {
-      router.replace("/");
-    }
   };
 
   return (

@@ -19,7 +19,6 @@ const PrimaryInput = React.forwardRef<HTMLInputElement, PrimaryInputProps>(
       title,
       defaultValue,
       description,
-      error,
       type,
       name,
       registerOptions,
@@ -34,9 +33,7 @@ const PrimaryInput = React.forwardRef<HTMLInputElement, PrimaryInputProps>(
       register?.(name, { ...registerOptions, value: defaultValue }) || {};
 
     const { errors } = formState || {};
-
-    const errorMessage =
-      error || getNestedValue(errors || {}, `${name}.message`);
+    const errorMessage = getNestedValue(errors || {}, `${name}.message`);
 
     return (
       <div className="flex flex-col">
