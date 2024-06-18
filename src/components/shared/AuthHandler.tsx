@@ -1,9 +1,9 @@
 import { setUserDetails } from "@/redux/slices/userSlice";
-import { supabase } from "@/service/supabase/auth";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { Session } from "@supabase/supabase-js";
+import { supabase } from "@/service/supabase/client";
 
 const AuthHandler = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();

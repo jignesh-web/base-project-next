@@ -18,7 +18,7 @@ export const handleAsync =
     asyncFn: T,
     {
       loadingCallback,
-      strictlyThrowError = false,
+      strictlyThrowError = true,
       toast,
       errorMessage,
       successMessage,
@@ -50,10 +50,10 @@ export const handleAsync =
       const message = (err as CustomError)?.message;
       const code = (err as CustomError)?.code;
 
-      if (!shouldHideErrorToast && toast && (errorMessage || code)) {
+      if (!shouldHideErrorToast && toast && (errorMessage || code || message)) {
         toast({
           type: "ERROR",
-          message: errorMessage || getErrorMessage(code),
+          message: errorMessage || message || getErrorMessage(code),
         });
       }
 

@@ -67,4 +67,4 @@ export const errorMessages = {
 };
 
 export const getErrorMessage = (key?: string) =>
-  errorMessages[key as keyof typeof errorMessages] || "Something went wrong";
+  errorMessages[key as keyof typeof errorMessages] || "Unknown error occurred";
